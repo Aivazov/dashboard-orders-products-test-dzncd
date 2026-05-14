@@ -6,6 +6,9 @@
   "Sidebar": {
     "menuItemOrders": "Приход",
     "menuItemProducts": "Продукты",
-    "logout": "Logout"
+    "logout": "Выйти"
+  },
+  "ProductsFilter": {
+    "productType": "Тип товара"
   }
 }

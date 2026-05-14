@@ -13,12 +13,14 @@ import {
 import { AppDispatch, RootState } from '@/store';
 import css from '../styles/Products.module.css';
 import orders from '@/utils/orders';
+import { useTranslations } from 'next-intl';
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedType, imageExists, products, loading, error } = useSelector(
     (state: RootState) => state.products,
   );
+  const t = useTranslations('ProductsFilter');
 
   // console.log('products from Products.tsx: ', products);
 
@@ -99,7 +101,7 @@ const Products = () => {
   return (
     <div className='container mt-4'>
       <div className='mb-3 fade-in'>
-        <label className='form-label'>Тип товара:</label>
+        <label className='form-label'>{t('productType')}:</label>
         <select
           className='form-select cursor__pointer'
           aria-label='Default select example'
