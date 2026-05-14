@@ -1,13 +1,17 @@
-const formatDate = (dateString: string, dateType: boolean) => {
+const formatDate = (
+  dateString: string,
+  dateType: boolean,
+  locale: string = 'en-US',
+) => {
   const date = new Date(dateString);
   if (dateType) {
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString(locale, {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
     });
   }
-  return date.toLocaleString('ru-RU', {
+  return date.toLocaleString(locale, {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
@@ -16,8 +20,8 @@ const formatDate = (dateString: string, dateType: boolean) => {
   });
 };
 
-const formatTime = (date: Date) => {
-  return date.toLocaleTimeString('ru-RU', {
+const formatTime = (date: Date, locale: string = 'en-US') => {
+  return date.toLocaleTimeString(locale, {
     hour: '2-digit',
     minute: '2-digit',
   });

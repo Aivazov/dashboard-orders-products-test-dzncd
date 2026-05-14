@@ -1,5 +1,6 @@
 'use client';
 import { formatTime } from '@/utils/formatDate';
+import { useLocale } from 'next-intl';
 import React from 'react';
 import { FaRegClock } from 'react-icons/fa6';
 
@@ -7,6 +8,7 @@ type Props = {};
 
 const TopMenuDate = (props: Props) => {
   const [currentTime, setCurrentTime] = React.useState(new Date());
+  const locale = useLocale();
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -17,7 +19,7 @@ const TopMenuDate = (props: Props) => {
   }, []);
 
   const formatWeekday = (date: Date) => {
-    const weekday = new Intl.DateTimeFormat('ru-RU', {
+    const weekday = new Intl.DateTimeFormat(locale, {
       weekday: 'long',
     }).format(date);
     return weekday.charAt(0).toUpperCase() + weekday.slice(1);
@@ -30,7 +32,7 @@ const TopMenuDate = (props: Props) => {
       year: 'numeric',
     };
 
-    return new Intl.DateTimeFormat('ru-RU', options).format(date);
+    return new Intl.DateTimeFormat(locale, options).format(date);
   };
 
   return (
@@ -44,7 +46,7 @@ const TopMenuDate = (props: Props) => {
             <span className='me-1'>
               <FaRegClock className='logo__sign-color' />
             </span>{' '}
-            {formatTime(currentTime)}
+            {formatTime(currentTime, locale)}
           </span>
         </div>
       </div>

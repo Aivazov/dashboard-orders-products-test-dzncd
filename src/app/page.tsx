@@ -7,10 +7,10 @@ export default function Home() {
       <nav>
         <ul>
           <li className='d-flex align-items-center gap-2'>
-            <Link href='/orders'>Orders</Link>
+            <Link href='en/orders'>Orders</Link>
           </li>
           <li>
-            <Link href='/products'>Products</Link>
+            <Link href='en/products'>Products</Link>
           </li>
         </ul>
       </nav>

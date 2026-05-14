@@ -1,0 +1,11 @@
+{
+  "TopMenu": {
+    "title": "Панель",
+    "logout": "Выйти"
+  },
+  "Sidebar": {
+    "menuItemOrders": "Приход",
+    "menuItemProducts": "Продукты",
+    "logout": "Logout"
+  }
+}

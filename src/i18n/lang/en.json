@@ -1,0 +1,11 @@
+{
+  "TopMenu": {
+    "title": "Dashboard",
+    "logout": "Logout"
+  },
+  "Sidebar": {
+    "menuItemOrders": "Orders",
+    "menuItemProducts": "Products",
+    "logout": "Logout"
+  }
+}

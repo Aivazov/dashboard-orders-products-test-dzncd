@@ -1,3 +1,4 @@
+// src/components/MainDashboard/MainDashboard.tsx
 'use client';
 import React from 'react';
 import Sidebar from '../Sidebar/Sidebar';

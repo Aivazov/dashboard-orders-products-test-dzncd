@@ -1,3 +1,6 @@
+// src/components/TopMenu/TopMenu.tsx
+
+import LocaleSwitcher from './LocaleSwitcher';
 import Logo from './Logo';
 // import Searchbar from './Searchbar';
 // import SessionCounter from './SessionCounter';
@@ -23,6 +26,7 @@ const TopMenu = (props: Props) => {
         <div className='d-flex align-items-center gap-2'>
           {/* <SessionCounter /> */}
           <TopMenuDate />
+          <LocaleSwitcher />
           {/* <LogoutBtn /> */}
         </div>
       </div>
