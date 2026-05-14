@@ -1,0 +1,33 @@
+'use client';
+import { FaListUl } from 'react-icons/fa6';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
+import SidebarMenuItem from './SidebarMenuItem';
+
+type Props = {};
+
+const NavigationMenu = (props: Props) => {
+  return (
+    <nav
+      className='shadow p-3 flex flex-col justify-between'
+      // className='shadow p-3 d-flex flex-column fixed justify-content-between'
+      style={{ maxWidth: '350px', height: '90vh' }}
+    >
+      <ul className='nav flex-column gap-3'>
+        <SidebarMenuItem
+          name='Приход'
+          path='/orders'
+          pathnameProp='/orders'
+          Icon={FaListUl}
+        />
+        <SidebarMenuItem
+          name='Продукты'
+          path='/products'
+          pathnameProp='/products'
+          Icon={HiOutlineShoppingBag}
+        />
+      </ul>
+    </nav>
+  );
+};
+
+export default NavigationMenu;

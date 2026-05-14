@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -23,4 +23,144 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* @import "tailwindcss"; */
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #fff;
+    --foreground: #000;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.logo__sign-color {
+  color: rgb(124, 179, 66) !important;
+}
+
+.shadow-box {
+  /* display: inline-block; */
+  /* padding-top: 12px;
+  padding-bottom: 12px; */
+  background: white;
+  /* border-radius: 8px; */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  /* font-weight: bold; */
+  /* text-transform: uppercase; */
+  /* color: #333; */
+}
+
+.shadow-box--right {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: white;
+  box-shadow: 3px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); */
+}
+
+.nav-link--hover:hover {
+  /* background-color: #a3a4a5;  */
+  background-color: rgb(124, 179, 66);
+  color: #fff;
+}
+
+.nav-link--custom {
+  transition: background-color 0.3s ease;
+  color: #575757;
+}
+
+.nav-link--custom.active {
+  background-color: rgb(124, 179, 66) !important;
+  /* background-color: #a1a1a1;  */
+  color: white;
+}
+
+.nav-link--custom:hover {
+  color: white;
+  background-color: rgb(124, 179, 66);
+  /* background-color: #a1a1a1; */
+}
+
+.cursor__pointer {
+  cursor: pointer;
+}
+
+/* TRANSITIONS */
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes appearAnimation {
+  from {
+    opacity: 0;
+    /* transform: translateY(20px);  */
+  }
+  to {
+    opacity: 1;
+    /* transform: translateY(0);  */
+  }
+}
+
+@keyframes disappearAnimation {
+  from {
+    opacity: 1;
+    /* transform: translateY(0);  */
+  }
+  to {
+    opacity: 0;
+    /* transform: translateY(20px);  */
+  }
+}
+
+.fade-in {
+  animation: fadeInAnimation 0.5s ease-out forwards;
+}
+
+.fade-out {
+  animation: fadeOutAnimation 0.5s ease-out forwards;
+}
+
+.appear-animation {
+  animation: appearAnimation 0.5s ease-out forwards;
+}
+
+.disappear-animation {
+  animation: disappearAnimation 0.5s ease-out forwards;
 }
