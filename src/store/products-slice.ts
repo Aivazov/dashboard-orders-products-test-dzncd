@@ -5,7 +5,7 @@ import { RootState } from './index';
 import { Products } from './types';
 
 const initialState: Products = {
-  selectedType: 'Все',
+  selectedType: 'all',
   imageExists: {},
   products: [],
   loading: false,
@@ -24,12 +24,9 @@ export const loadProducts = createAsyncThunk(
   async (_, { getState }) => {
     const state = getState() as RootState; // получаем текущие данные состояния
     if (state.products.products.length > 0) {
-      // console.log('state.products.products ', state.products.products);
-
       return state.products.products;
       // return state.products.products;
     }
-    // console.log('state.products.products fetchProducts', state.products.products);
     return await fetchProducts();
   },
 );
@@ -60,7 +57,6 @@ const productsSlice = createSlice({
       });
   },
 });
-console.log('productsSlice: ', productsSlice);
 
 export const { setSelectedType, setImageExists } = productsSlice.actions;
 

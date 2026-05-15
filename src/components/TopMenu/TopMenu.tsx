@@ -7,9 +7,7 @@ import Logo from './Logo';
 // import LogoutBtn from '../LogoutBtn';
 import TopMenuDate from './TopMenuDate';
 
-type Props = {};
-
-const TopMenu = (props: Props) => {
+const TopMenu = () => {
   return (
     <header
       className='w-100 justify-content-center align-items-center d-flex shadow-box py-0'

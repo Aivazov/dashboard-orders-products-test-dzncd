@@ -9,6 +9,14 @@
     "logout": "Выйти"
   },
   "ProductsFilter": {
-    "productType": "Тип товара"
+    "productType": "Тип товара",
+    "all": "Все",
+    "monitors": "Мониторы",
+    "tablets": "Планшеты",
+    "laptops": "Ноутбуки"
+  },
+  "ProductsCard": {
+    "conditionNew": "новый",
+    "conditionUsed": "б / у"
   }
 }

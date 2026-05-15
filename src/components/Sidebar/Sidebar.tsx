@@ -4,13 +4,10 @@
 import { FaListUl } from 'react-icons/fa6';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import SidebarMenuItem from './SidebarMenuItem';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
-type Props = {};
-
-const NavigationMenu = (props: Props) => {
+const NavigationMenu = () => {
   const t = useTranslations('Sidebar');
-  const locale = useLocale();
   return (
     <nav
       className='shadow p-3 flex flex-col justify-between'

@@ -8,7 +8,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { formatDate } from '@/utils/formatDate';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { RootState } from '@/store';
+import { AppDispatch, RootState } from '@/store';
 import {
   deleteOrder,
   setCurrencyUAH,
@@ -17,6 +17,7 @@ import {
   setSelectedOrder,
 } from '@/store/orders-slice';
 import products from '@/utils/products';
+import OrderDetails from './OrderDetails';
 
 // import dynamic from 'next/dynamic';
 
@@ -30,7 +31,7 @@ const Orders = () => {
   // const [currencyUAH, setCurrencyUAH] = useState<number | null>(null)
   const [isDisappearing, setIsDisappearing] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
   const { orders, selectedOrder, orderToDelete, currencyUSD, currencyUAH } =
@@ -205,40 +206,11 @@ const Orders = () => {
 
       {/* Order Details */}
       {selectedOrder && (
-        <div
-          className={`p-3 bg-light d-flex justify-content-between appear-animation ${isDisappearing ? 'disappear-animation' : ''}`}
-          style={{ width: '200%' }}
-        >
-          {/* <div className="w-2/3 p-4 bg-gray-50"> */}
-          {/* <div> */}
-
-          {/* <button className="mb-4 text-red-500" onClick={handleCloseDetails}>Close</button> */}
-          {/* </div> */}
-          <div>
-            <h2 className='text-lg font-bold'>{selectedOrder.title}</h2>
-            <p>Date: {formatDate(selectedOrder.date, false)}</p>
-            <h3 className='mt-4 font-semibold'>Products:</h3>
-            <ul>
-              {products
-                .filter((p) => p.order === selectedOrder.id)
-                .map((product) => (
-                  <li key={product.id}>
-                    {product.title} —{' '}
-                    {product.price.find((p) => p.symbol === 'USD')?.value} USD /
-                    {product.price.find((p) => p.symbol === 'UAH')?.value} UAH
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <div>
-            <button
-              className='btn btn-danger mb-4'
-              onClick={handleCloseDetails}
-            >
-              Закрыть
-            </button>
-          </div>
-        </div>
+        <OrderDetails
+          products={products}
+          isDisappearing={isDisappearing}
+          handleCloseDetails={handleCloseDetails}
+        />
       )}
 
       {/* Deletion Modal */}

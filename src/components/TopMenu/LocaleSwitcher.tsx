@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { ChangeEvent } from 'react';
+import { MdLanguage } from 'react-icons/md';
 
 const LocaleSwitcher = () => {
   const locale = useLocale();
@@ -13,20 +14,27 @@ const LocaleSwitcher = () => {
 
   function onSelectChange(event: ChangeEvent<HTMLSelectElement>) {
     const nextLocale = event.target.value;
-    // router.replace перенаправит на ту же страницу, но с новой локалью
     router.replace(pathname, { locale: nextLocale });
   }
   return (
-    <div className='ms-2'>
+    <div
+      className='d-flex align-items-center px-2 py-1 bg-white rounded-pill shadow-sm border'
+      style={{ width: 'fit-content' }}
+    >
+      <MdLanguage size={18} className='text-secondary me-2' />
+
       <select
-        className='form-select form-select-sm'
+        className='border-0 bg-transparent fw-semibold text-dark cursor-pointer'
         defaultValue={locale}
         onChange={onSelectChange}
-        style={{ width: 'auto', cursor: 'pointer' }}
+        style={{
+          outline: 'none',
+          boxShadow: 'none',
+        }}
       >
-        {routing.locales.map((cur) => (
-          <option key={cur} value={cur}>
-            {cur.toUpperCase()}
+        {routing.locales.map((loc) => (
+          <option key={loc} value={loc}>
+            {loc.toUpperCase()}
           </option>
         ))}
       </select>

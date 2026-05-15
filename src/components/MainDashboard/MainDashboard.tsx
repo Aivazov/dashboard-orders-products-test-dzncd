@@ -13,9 +13,8 @@ type MainDashboardProps = {
 const MainDashboard = ({ children }: MainDashboardProps) => {
   return (
     <Provider store={store}>
-      {/* <div className='min-h-full flex flex-col'> */}
       <TopMenu />
-      {/* <div className='flex'> */}
+
       <div className='d-flex'>
         <Sidebar />
         {children}

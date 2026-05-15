@@ -4,9 +4,7 @@ import { useLocale } from 'next-intl';
 import React from 'react';
 import { FaRegClock } from 'react-icons/fa6';
 
-type Props = {};
-
-const TopMenuDate = (props: Props) => {
+const TopMenuDate = () => {
   const [currentTime, setCurrentTime] = React.useState(new Date());
   const locale = useLocale();
 

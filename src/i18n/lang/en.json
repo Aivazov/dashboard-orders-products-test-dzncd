@@ -9,6 +9,14 @@
     "logout": "Logout"
   },
   "ProductsFilter": {
-    "productType": "Product type"
+    "productType": "Product type",
+    "all": "All",
+    "monitors": "Monitors",
+    "tablets": "Tablets",
+    "laptops": "Laptops"
+  },
+  "ProductsCard": {
+    "conditionNew": "new",
+    "conditionUsed": "used"
   }
 }

@@ -1,13 +1,13 @@
 import { Link, usePathname } from '@/i18n/navigation';
 import { IconType } from 'react-icons';
 
-type Props = {
+type NavigationMenuItemProps = {
   name: string;
   path: string;
   Icon: IconType;
 };
 
-const NavigationMenuItem = ({ name, path, Icon }: Props) => {
+const NavigationMenuItem = ({ name, path, Icon }: NavigationMenuItemProps) => {
   const pathname = usePathname();
   const isActive = path === pathname;
 

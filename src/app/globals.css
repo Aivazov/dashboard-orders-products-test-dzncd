@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+/* @import 'tailwindcss'; */
 
 :root {
   --background: #ffffff;
@@ -163,4 +163,8 @@ body {
 
 .disappear-animation {
   animation: disappearAnimation 0.5s ease-out forwards;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

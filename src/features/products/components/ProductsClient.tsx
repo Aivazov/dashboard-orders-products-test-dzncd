@@ -2,36 +2,20 @@
 
 'use client';
 import { useEffect } from 'react';
-import Image from 'next/image';
-import { formatDate } from '@/utils/formatDate';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setSelectedType,
-  setImageExists,
-  loadProducts,
-} from '@/store/products-slice';
+import { loadProducts } from '@/store/products-slice';
 import { AppDispatch, RootState } from '@/store';
-import css from '../styles/Products.module.css';
-import orders from '@/utils/orders';
-import { useTranslations } from 'next-intl';
+import ProductsTypeSelector from './ProductsTypeSelector';
+import ProductCard from './ProductCard/ProductCard';
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { selectedType, imageExists, products, loading, error } = useSelector(
+  const { selectedType, products, loading, error } = useSelector(
     (state: RootState) => state.products,
   );
-  const t = useTranslations('ProductsFilter');
-
-  // console.log('products from Products.tsx: ', products);
-
-  // Filtering Data
-  const productTypes = [
-    'Все',
-    ...Array.from(new Set(products.map((p) => p.type))),
-  ];
 
   const filteredProducts =
-    selectedType === 'Все'
+    selectedType === 'all'
       ? products
       : products.filter((p) => p.type === selectedType);
 
@@ -42,8 +26,6 @@ const Products = () => {
     // dispatch(loadProducts());
     // dispatch(loadProducts(jwtToken));
   }, [dispatch, products.length, loading]);
-  // }, []);
-  // }, [dispatch]);
 
   // Image existence checker
   // const checkImagesExistence = async () => {
@@ -100,91 +82,12 @@ const Products = () => {
 
   return (
     <div className='container mt-4'>
-      <div className='mb-3 fade-in'>
-        <label className='form-label'>{t('productType')}:</label>
-        <select
-          className='form-select cursor__pointer'
-          aria-label='Default select example'
-          value={selectedType}
-          onChange={(e) => dispatch(setSelectedType(e.target.value))}
-        >
-          {productTypes.map((type) => (
-            <option
-              key={type}
-              value={type}
-              className='cursor__pointer nav-link--custom'
-            >
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
+      <ProductsTypeSelector />
 
       <ul className='list-group fade-in'>
         {filteredProducts.map((product) => (
           <li key={product.id} className='card mb-3 w-100 shadow-box'>
-            <div className='d-flex align-content-center justify-content-between'>
-              <div className=''>
-                <Image
-                  src={
-                    imageExists[product.id]
-                      ? `/${product.photo}`
-                      : '/no-img.jpg'
-                  }
-                  width={150}
-                  height={150}
-                  className='img-fluid rounded-start'
-                  alt={product.title}
-                />
-              </div>
-              <div className='d-flex align-items-center gap-3 justify-content-between w-100 px-4 text-left'>
-                <div
-                  className={`d-flex flex-column justify-content-start ${css.maxWidth90}`}
-                >
-                  <h5 className='card-title mb-0'>{product.title}</h5>
-                  <p className='card-text'>
-                    <small className='text-body-secondary'>
-                      {product.serialNumber}
-                    </small>
-                  </p>
-                </div>
-                <div className='d-flex flex-column justify-content-start'>
-                  <p className='card-text mb-0'>
-                    c {formatDate(product.guarantee.start, true)}
-                  </p>
-                  <p className='card-text'>
-                    по {formatDate(product.guarantee.end, true)}
-                  </p>
-                </div>
-                <p className={`card-text mb-0 ${css.maxWidth50}`}>
-                  {product.isNewProduct ? 'новый' : 'Б / У'}
-                </p>
-                <p className='card-text mb-0'>{product.type}</p>
-
-                <div className='d-flex flex-column align-items-center'>
-                  {product.price.map((p) => (
-                    <div key={p.symbol} className='text-center'>
-                      {p.symbol === 'USD' ? (
-                        <p className='mb-0'>
-                          <small className='text-body-secondary'>
-                            {p.value} {p.symbol}
-                          </small>
-                        </p>
-                      ) : (
-                        <p className='mb-0'>
-                          {p.value} {p.symbol}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <p className='card-text mb-0'>
-                  <strong>Order:</strong>{' '}
-                  {orders.find((o) => o.id === product.order)?.title ||
-                    'Unknown'}
-                </p>
-              </div>
-            </div>
+            <ProductCard product={product} />
           </li>
         ))}
       </ul>

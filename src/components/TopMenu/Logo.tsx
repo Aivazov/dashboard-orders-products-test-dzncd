@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-type Props = {};
-
-const Logo = (props: Props) => {
+const Logo = () => {
   return (
     <Link href='/' className='navbar-text text-decoration-none'>
       <div className='d-flex align-items-center gap-3'>
