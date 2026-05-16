@@ -1,18 +1,20 @@
 // src/features/products/components/ProductsClient.tsx
 
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProducts } from '@/store/products-slice';
 import { AppDispatch, RootState } from '@/store';
 import ProductsTypeSelector from './ProductsTypeSelector';
 import ProductCard from './ProductCard/ProductCard';
+import ProductSkeleton from './ProductSkeleton';
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedType, products, loading, error } = useSelector(
     (state: RootState) => state.products,
   );
+  const [isVisualLoading, setIsVisualLoading] = useState(false);
 
   const filteredProducts =
     selectedType === 'all'
@@ -27,6 +29,18 @@ const Products = () => {
     // dispatch(loadProducts(jwtToken));
   }, [dispatch, products.length, loading]);
 
+  useEffect(() => {
+    if (loading) {
+      setIsVisualLoading(true);
+    } else {
+      // Когда данные пришли, даем скелетонам докрутиться (например, 600мс всего)
+      const timer = setTimeout(() => {
+        setIsVisualLoading(false);
+      }, 600); // Время задержки в мс
+
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
   // Image existence checker
   // const checkImagesExistence = async () => {
   //   const imageChecks = products.map(async (product) => {
@@ -72,13 +86,20 @@ const Products = () => {
   // }, [products]);
   // }, [products, dispatch]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className='container px-4 py-4'>
+        <div className='alert alert-danger' role='alert'>
+          Error: {error}
+        </div>
+      </div>
+    );
   }
+  const showSkeletons = loading || isVisualLoading;
 
   return (
     // <div
@@ -101,15 +122,20 @@ const Products = () => {
         // style={{ height: 'calc(100vh - 10vh)', overflowY: 'auto' }}
       >
         {/* <ul className='row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 list-unstyled fade-in'> */}
-        {filteredProducts.map((product) => (
-          <li
-            key={product.id}
-            className='card mb-3 w-100 shadow-box flex-shrink-0'
-          >
-            {/* <li key={product.id} className='card mb-3 w-100 shadow-box'> */}
-            <ProductCard product={product} />
-          </li>
-        ))}
+        {showSkeletons
+          ? // Рендерим 4 скелетона во время загрузки
+            Array.from({ length: 4 }).map((_, idx) => (
+              <ProductSkeleton key={`skeleton-${idx}`} />
+            ))
+          : // Рендерим реальные продукты, когда загрузка завершена
+            filteredProducts.map((product) => (
+              <li
+                key={product.id}
+                className='card mb-3 w-100 shadow-box flex-shrink-0'
+              >
+                <ProductCard product={product} />
+              </li>
+            ))}
       </ul>
     </div>
   );

@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import { Order } from '@/features/orders/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/store';
 import {
   deleteOrder,
@@ -32,9 +31,8 @@ const Orders = () => {
   const [isDisappearing, setIsDisappearing] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
 
-  const { orders, selectedOrder, orderToDelete, currencyUSD, currencyUAH } =
+  const { selectedOrder, orderToDelete, currencyUSD, currencyUAH } =
     useSelector((state: RootState) => state.orders);
   // const isAuthenticated = useSelector(
   //   (state: RootState) => state.auth.isAuthenticated,
@@ -57,12 +55,11 @@ const Orders = () => {
   };
 
   const handleCloseDetails = () => {
-    dispatch(setSelectedOrder(null));
     setIsDisappearing(true);
     setTimeout(() => {
-      setSelectedOrder(null);
+      dispatch(setSelectedOrder(null));
       setIsDisappearing(false);
-    }, 500);
+    }, 300);
   };
 
   const handleDeleteOrder = () => {
