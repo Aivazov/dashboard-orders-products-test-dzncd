@@ -1,4 +1,13 @@
 {
+  "Main": {
+    "close": "Close",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "orders": "Orders",
+    "order": "Order",
+    "products": "Products",
+    "product": "Product"
+  },
   "TopMenu": {
     "title": "Dashboard",
     "logout": "Logout"
@@ -18,5 +27,11 @@
   "ProductsCard": {
     "conditionNew": "new",
     "conditionUsed": "used"
+  },
+  "Orders": {
+    "modalDeleteTitle": "Deletion of the order",
+    "modalDeleteQuestion": "Are you sure you want to delete",
+    "sum": "Sum",
+    "order": "Order"
   }
 }

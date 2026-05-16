@@ -2,6 +2,7 @@
 import { Product } from '@/features/products/types';
 import { RootState } from '@/store';
 import { formatDate } from '@/utils/formatDate';
+import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
 
 type Props = {
@@ -19,20 +20,16 @@ const OrderDetails = ({
     (state: RootState) => state.orders.selectedOrder,
   );
   if (!selectedOrder) return null;
+  const tMain = useTranslations('Main');
   return (
     <div
       className={`p-3 bg-light d-flex justify-content-between appear-animation ${isDisappearing ? 'disappear-animation' : ''}`}
       style={{ width: '200%' }}
     >
-      {/* <div className="w-2/3 p-4 bg-gray-50"> */}
-      {/* <div> */}
-
-      {/* <button className="mb-4 text-red-500" onClick={handleCloseDetails}>Close</button> */}
-      {/* </div> */}
       <div>
         <h2 className='text-lg font-bold'>{selectedOrder.title}</h2>
         <p>Date: {formatDate(selectedOrder.date, false)}</p>
-        <h3 className='mt-4 font-semibold'>Products:</h3>
+        <h3 className='mt-4 font-semibold'>{tMain('products')}:</h3>
         <ul>
           {products
             .filter((p) => p.order === selectedOrder.id)
@@ -47,7 +44,7 @@ const OrderDetails = ({
       </div>
       <div>
         <button className='btn btn-danger mb-4' onClick={handleCloseDetails}>
-          Закрыть
+          {tMain('close')}
         </button>
       </div>
     </div>

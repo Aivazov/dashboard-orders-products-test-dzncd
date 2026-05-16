@@ -1,4 +1,13 @@
 {
+  "Main": {
+    "close": "Закрыть",
+    "delete": "Удалить",
+    "cancel": "Отменить",
+    "orders": "Заказы",
+    "order": "Заказ",
+    "products": "Товары",
+    "product": "Товар"
+  },
   "TopMenu": {
     "title": "Панель",
     "logout": "Выйти"
@@ -18,5 +27,11 @@
   "ProductsCard": {
     "conditionNew": "новый",
     "conditionUsed": "б / у"
+  },
+  "Orders": {
+    "modalDeleteTitle": "Удаление заказа",
+    "modalDeleteQuestion": "Вы уверены, что хотите удалить",
+    "sum": "Сумма",
+    "order": "Заказ"
   }
 }

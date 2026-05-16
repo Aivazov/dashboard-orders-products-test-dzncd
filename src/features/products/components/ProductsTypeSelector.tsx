@@ -16,10 +16,8 @@ const ProductsTypeSelector = () => {
   // Filtering Data By
   const productTypes = [
     'all',
-    // t('all'),
     ...Array.from(new Set(products.map((p) => p.type))),
   ];
-  console.log(products.map((p) => p.type));
   return (
     <div className='mb-3 fade-in'>
       <label className='form-label'>{t('productType')}:</label>
@@ -35,9 +33,7 @@ const ProductsTypeSelector = () => {
             value={type}
             className='cursor__pointer nav-link--custom'
           >
-            {/* {t(`${type}`)} */}
             {t(type)}
-            {/* {type} */}
           </option>
         ))}
       </select>

@@ -40,7 +40,7 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <MainDashboard>
-            <main className='flex-grow-1 p-3'>{children}</main>
+            <main className='flex-grow-1'>{children}</main>
           </MainDashboard>
 
           {/* <Script

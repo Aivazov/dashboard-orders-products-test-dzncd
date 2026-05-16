@@ -81,12 +81,32 @@ const Products = () => {
   }
 
   return (
-    <div className='container mt-4'>
-      <ProductsTypeSelector />
+    // <div
+    // className='container px-3 py-4 d-flex flex-column'
+    // style={{ height: 'calc(100vh - 10vh)', overflowY: 'auto' }}
+    // >
+    <div
+      className='container px-4 py-4 d-flex flex-column'
+      style={{ height: 'calc(100vh - 100px)' }}
+    >
+      {/* <div className='container mt-4 overflow-y-auto' > */}
+      <div className='flex-shrink-0 mb-3'>
+        <ProductsTypeSelector />
+      </div>
 
-      <ul className='list-group fade-in'>
+      <ul
+        // className='list-group fade-in container'
+        className='list-group fade-in flex-grow-1'
+        style={{ overflowY: 'auto', minHeight: 0 }}
+        // style={{ height: 'calc(100vh - 10vh)', overflowY: 'auto' }}
+      >
+        {/* <ul className='row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 list-unstyled fade-in'> */}
         {filteredProducts.map((product) => (
-          <li key={product.id} className='card mb-3 w-100 shadow-box'>
+          <li
+            key={product.id}
+            className='card mb-3 w-100 shadow-box flex-shrink-0'
+          >
+            {/* <li key={product.id} className='card mb-3 w-100 shadow-box'> */}
             <ProductCard product={product} />
           </li>
         ))}

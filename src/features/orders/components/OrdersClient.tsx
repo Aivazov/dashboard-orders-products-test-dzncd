@@ -3,9 +3,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Order } from '@/features/orders/types';
-// import { Modal } from 'bootstrap';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { formatDate } from '@/utils/formatDate';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/store';
@@ -18,6 +15,8 @@ import {
 } from '@/store/orders-slice';
 import products from '@/utils/products';
 import OrderDetails from './OrderDetails';
+import DeleteOrderModal from './DeleteOrderModal';
+import OrdersList from './OrdersList/OrdersList';
 
 // import dynamic from 'next/dynamic';
 
@@ -29,6 +28,7 @@ const Orders = () => {
   // const [orderToDelete, setOrderToDelete] = useState<Order | null>(null);
   // const [currencyUSD, setCurrencyUSD] = useState<number | null>(null)
   // const [currencyUAH, setCurrencyUAH] = useState<number | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDisappearing, setIsDisappearing] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -149,60 +149,10 @@ const Orders = () => {
   return (
     <div className='d-flex w-100'>
       {/* Orders List */}
-      <ul className='d-flex flex-column gap-3 p-3 list-group cursor-pointer w-100 fade-in'>
-        {/* <ul className="d-flex flex-column gap-3 p-3 list-group cursor-pointer w-25 fade-in"> */}
-        {/* <ul className="w-1/3 p-4 d-flex flex-column gap-3 p-3"> */}
-        {/* <ul className="list-group w-33 p-3"> */}
-        {/* <h2 className="text-lg font-bold">Orders</h2> */}
-        {orders.map((order) => {
-          const orderProducts = products.filter((p) => p.order === order.id);
-          const totalSumUSD = orderProducts.reduce(
-            (sum, p) =>
-              sum + (p.price.find((pr) => pr.symbol === 'USD')?.value || 0),
-            0,
-          );
-          // setCurrencyUSD(totalSumUSD)
-          const totalSumUAH = orderProducts.reduce(
-            (sum, p) =>
-              sum + (p.price.find((pr) => pr.symbol === 'UAH')?.value || 0),
-            0,
-          );
-          // setCurrencyUAH(totalSumUAH)
-
-          return (
-            <li
-              key={order.id}
-              className={`list-group-item border rounded list-group-item-action cursor__pointer shadow-box nav-link--custom ${selectedOrder?.id === order.id ? 'active' : ''}`}
-              // className="list-group-item border rounded list-group-item-action cursor__pointer shadow-box"
-              // className="p-2 border rounded cursor-pointer hover:bg-gray-100"
-
-              onClick={() => handleSelectOrder(order)}
-            >
-              <div className='d-flex justify-content-between w-100'>
-                <div>
-                  <h3 className='font-weight-bold'>{order.title}</h3>
-                  <p>Products: {orderProducts.length}</p>
-                </div>
-                <div>
-                  <button
-                    type='button'
-                    className='btn btn-secondary'
-                    // onClick={() => handleOpenDeleteModal(order)}
-                  >
-                    <AiOutlineDelete />
-                  </button>
-                </div>
-              </div>
-              <div>
-                <p>Дата: {formatDate(order.date, false)}</p>
-                <p>
-                  Сумма: {totalSumUSD} USD / {totalSumUAH} UAH
-                </p>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <OrdersList
+        handleSelectOrder={handleSelectOrder}
+        setIsModalOpen={setIsModalOpen}
+      />
 
       {/* Order Details */}
       {selectedOrder && (
@@ -214,54 +164,20 @@ const Orders = () => {
       )}
 
       {/* Deletion Modal */}
-      <div
-        className='modal fade'
-        id='deleteOrderModal'
-        tabIndex={-1}
-        aria-labelledby='deleteOrderModalLabel'
-        aria-hidden='true'
-      >
-        <div className='modal-dialog'>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <h5 className='modal-title' id='deleteOrderModalLabel'>
-                Вы уверены, что хотите удалить этот Order?
-              </h5>
-              <button
-                type='button'
-                className='btn-close'
-                data-bs-dismiss='modal'
-                aria-label='Close'
-              ></button>
-            </div>
-            <div className='modal-body'>
-              <p>
-                <strong>{orderToDelete?.title}</strong>
-              </p>
-              <p>
-                Сумма: {currencyUSD} USD / {currencyUAH} UAH
-              </p>
-            </div>
-            <div className='modal-footer'>
-              <button
-                type='button'
-                className='btn btn-secondary'
-                data-bs-dismiss='modal'
-              >
-                Отменить
-              </button>
-              <button
-                type='button'
-                className='btn btn-danger'
-                data-bs-dismiss='modal'
-                onClick={handleDeleteOrder}
-              >
-                Удалить
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <DeleteOrderModal
+        isOpen={isModalOpen}
+        order={orderToDelete}
+        currencyUSD={currencyUSD}
+        currencyUAH={currencyUAH}
+        onClose={() => {
+          setIsModalOpen(false);
+          dispatch(setOrderToDelete(null));
+        }}
+        onConfirm={() => {
+          handleDeleteOrder();
+          setIsModalOpen(false);
+        }}
+      />
     </div>
   );
 };
