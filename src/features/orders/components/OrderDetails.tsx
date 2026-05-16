@@ -1,6 +1,6 @@
 // src/features/products/components/OrderDetails.tsx
 import { Product } from '@/features/products/types';
-import { RootState } from '@/store';
+import { RootState } from '@/redux';
 import { formatDate } from '@/utils/formatDate';
 import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ const OrderDetails = ({
   handleCloseDetails,
 }: Props) => {
   const selectedOrder = useSelector(
-    (state: RootState) => state.orders.selectedOrder
+    (state: RootState) => state.orders.selectedOrder,
   );
   if (!selectedOrder) return null;
   const tMain = useTranslations('Main');

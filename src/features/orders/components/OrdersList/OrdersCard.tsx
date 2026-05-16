@@ -1,12 +1,12 @@
 // src/features/components/OrdersList/OrdersCard.tsx
 
-import { RootState } from '@/store';
+import { RootState } from '@/redux';
 import { formatDate } from '@/utils/formatDate';
 import { Dispatch, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Order, OrderProducts } from '../../types';
-import { setOrderToDelete } from '@/store/orders-slice';
+import { setOrderToDelete } from '@/features/orders/model/orders-slice';
 import { AiOutlineDelete } from 'react-icons/ai';
 
 type OrdersCardProps = {

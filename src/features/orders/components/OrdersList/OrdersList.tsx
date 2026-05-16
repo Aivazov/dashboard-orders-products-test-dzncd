@@ -1,11 +1,15 @@
 // src/features/components/OrdersList/OrdersList.tsx
 
-import { RootState } from '@/store';
+import { AppDispatch, RootState } from '@/redux';
 import products from '@/utils/products';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Order } from '../../types';
 import OrdersCard from './OrdersCard';
+import { useDispatch } from 'react-redux';
+import { loadOrders } from '../../model/orders-slice';
+import OrdersSkeleton from '../OrdersSkeleton';
+import { calculateCurrencyTotal } from '../../utils/calculateCurrencyTotal';
 
 type OrdersListProps = {
   handleSelectOrder: (order: Order) => void;
@@ -13,42 +17,56 @@ type OrdersListProps = {
 };
 
 const OrdersList = ({ handleSelectOrder, setIsModalOpen }: OrdersListProps) => {
-  const orders = useSelector((state: RootState) => state.orders.orders);
+  const dispatch = useDispatch<AppDispatch>();
 
+  const orders = useSelector((state: RootState) => state.orders.orders);
+  const loading = useSelector((state: RootState) => state.orders.loading);
+
+  const [isVisualLoading, setIsVisualLoading] = useState(false);
+
+  useEffect(() => {
+    if (orders.length === 0 && !loading) dispatch(loadOrders());
+  }, [dispatch, orders.length]);
+
+  useEffect(() => {
+    if (loading) {
+      setIsVisualLoading(true);
+    } else {
+      const timer = setTimeout(() => {
+        setIsVisualLoading(false);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
+
+  const showSkeletons = loading || isVisualLoading;
   return (
     <ul
       className='list-group fade-in flex-grow-1 max-w-1/2 gap-3'
-      // className='list-group fade-in flex-grow-1 min-w-1/3 gap-[5px]'
       style={{ overflowY: 'auto', minHeight: 0 }}
     >
-      {/* <ul className='d-flex flex-column gap-3 p-3 list-group cursor-pointer w-100 fade-in'> */}
-      {orders.map((order) => {
-        const orderProducts = products.filter((p) => p.order === order.id);
-        const totalSumUSD = orderProducts.reduce(
-          (sum, p) =>
-            sum + (p.price.find((pr) => pr.symbol === 'USD')?.value || 0),
-          0
-        );
-        // setCurrencyUSD(totalSumUSD)
-        const totalSumUAH = orderProducts.reduce(
-          (sum, p) =>
-            sum + (p.price.find((pr) => pr.symbol === 'UAH')?.value || 0),
-          0
-        );
-        // setCurrencyUAH(totalSumUAH)
+      {showSkeletons
+        ? Array.from({ length: 4 }).map((_, idx) => (
+            <OrdersSkeleton key={`skeleton-${idx}`} />
+          ))
+        : orders.map((order) => {
+            const orderProducts = products.filter((p) => p.order === order.id);
 
-        return (
-          <OrdersCard
-            key={order.id}
-            order={order}
-            handleSelectOrder={handleSelectOrder}
-            setIsModalOpen={setIsModalOpen}
-            orderProducts={orderProducts}
-            totalSumUSD={totalSumUSD}
-            totalSumUAH={totalSumUAH}
-          />
-        );
-      })}
+            const totalSumUSD = calculateCurrencyTotal(orderProducts, 'USD');
+            const totalSumUAH = calculateCurrencyTotal(orderProducts, 'UAH');
+
+            return (
+              <OrdersCard
+                key={order.id}
+                order={order}
+                handleSelectOrder={handleSelectOrder}
+                setIsModalOpen={setIsModalOpen}
+                orderProducts={orderProducts}
+                totalSumUSD={totalSumUSD}
+                totalSumUAH={totalSumUAH}
+              />
+            );
+          })}
     </ul>
   );
 };

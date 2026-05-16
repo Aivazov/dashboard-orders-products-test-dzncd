@@ -3,17 +3,22 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadProducts } from '@/store/products-slice';
-import { AppDispatch, RootState } from '@/store';
+import { loadProducts } from '@/features/products/model/products-slice';
+import { AppDispatch, RootState } from '@/redux';
 import ProductsTypeSelector from './ProductsTypeSelector';
 import ProductCard from './ProductCard/ProductCard';
 import ProductSkeleton from './ProductSkeleton';
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { selectedType, products, loading, error } = useSelector(
-    (state: RootState) => state.products
+
+  const products = useSelector((state: RootState) => state.products.products);
+  const selectedType = useSelector(
+    (state: RootState) => state.products.selectedType,
   );
+  const loading = useSelector((state: RootState) => state.products.loading);
+  const error = useSelector((state: RootState) => state.products.error);
+
   const [isVisualLoading, setIsVisualLoading] = useState(false);
 
   const filteredProducts =
@@ -98,6 +103,7 @@ const Products = () => {
       </div>
     );
   }
+
   const showSkeletons = loading || isVisualLoading;
 
   return (

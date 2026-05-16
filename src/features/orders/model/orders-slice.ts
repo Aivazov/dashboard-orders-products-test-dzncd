@@ -1,15 +1,35 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+// /src/features/orders/model/orders-slice.ts
+
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ordersData from '@/utils/orders';
 import { Order } from '@/features/orders/types';
+// import { RootState } from '../../../redux/index';
 import { OrdersState } from './types';
+import { fetchOrders } from '../api/orders';
+import { RootState } from '@/redux';
 
 const initialState: OrdersState = {
-  orders: ordersData,
+  orders: [],
+  // orders: ordersData,
+  loading: false,
+  error: null,
   selectedOrder: null,
   orderToDelete: null,
   currencyUSD: null,
   currencyUAH: null,
 };
+
+export const loadOrders = createAsyncThunk(
+  'orders/loadOrders',
+  async (_, { getState }) => {
+    const state = getState() as RootState;
+
+    //avoid request duplicates
+    if (state.orders.orders.length > 0) return state.orders.orders;
+
+    return fetchOrders();
+  },
+);
 
 const ordersSlice = createSlice({
   name: 'orders',
@@ -41,6 +61,21 @@ const ordersSlice = createSlice({
         state.orderToDelete = null;
       }
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(loadOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loadOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders = action.payload;
+      })
+      .addCase(loadOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to load orders';
+      });
   },
 });
 

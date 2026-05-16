@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { RootState } from '@/store';
+import { RootState } from '@/redux';
 import { useSelector } from 'react-redux';
 import { Product } from '../../types';
 

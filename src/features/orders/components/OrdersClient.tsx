@@ -2,38 +2,41 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import { Order } from '@/features/orders/types';
+import { Order, OrderProducts } from '@/features/orders/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/store';
+import { AppDispatch, RootState } from '@/redux';
 import {
   deleteOrder,
   setCurrencyUAH,
   setCurrencyUSD,
   setOrderToDelete,
   setSelectedOrder,
-} from '@/store/orders-slice';
+} from '@/features/orders/model/orders-slice';
 import products from '@/utils/products';
 import OrderDetails from './OrderDetails';
 import DeleteOrderModal from './DeleteOrderModal';
 import OrdersList from './OrdersList/OrdersList';
-
-// import dynamic from 'next/dynamic';
-
-// const ModalBootstrap = dynamic(() => import('bootstrap'), { ssr: false });
+import { calculateCurrencyTotal } from '../utils/calculateCurrencyTotal';
 
 const Orders = () => {
-  // const [orders, setOrders] = useState<Order[]>(ordersData);
-  // const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  // const [orderToDelete, setOrderToDelete] = useState<Order | null>(null);
-  // const [currencyUSD, setCurrencyUSD] = useState<number | null>(null)
-  // const [currencyUAH, setCurrencyUAH] = useState<number | null>(null)
+  const dispatch = useDispatch<AppDispatch>();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDisappearing, setIsDisappearing] = useState(false);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const selectedOrder = useSelector(
+    (state: RootState) => state.orders.selectedOrder,
+  );
+  const orderToDelete = useSelector(
+    (state: RootState) => state.orders.orderToDelete,
+  );
+  const currencyUSD = useSelector(
+    (state: RootState) => state.orders.currencyUSD,
+  );
+  const currencyUAH = useSelector(
+    (state: RootState) => state.orders.currencyUAH,
+  );
 
-  const { selectedOrder, orderToDelete, currencyUSD, currencyUAH } =
-    useSelector((state: RootState) => state.orders);
   // const isAuthenticated = useSelector(
   //   (state: RootState) => state.auth.isAuthenticated,
   // );
@@ -124,22 +127,15 @@ const Orders = () => {
 
   useEffect(() => {
     if (selectedOrder) {
+      // const orderProducts = order.products || [];
       const orderProducts = products.filter(
-        (p) => p.order === selectedOrder.id
+        (p) => p.order === selectedOrder.id,
       );
-      const totalSumUSD = orderProducts.reduce(
-        (sum, p) =>
-          sum + (p.price.find((pr) => pr.symbol === 'USD')?.value || 0),
-        0
-      );
-      dispatch(setCurrencyUSD(totalSumUSD));
+      const totalSumUSD = calculateCurrencyTotal(orderProducts, 'USD');
+      const totalSumUAH = calculateCurrencyTotal(orderProducts, 'UAH');
 
-      const totalSumUAH = orderProducts.reduce(
-        (sum, p) =>
-          sum + (p.price.find((pr) => pr.symbol === 'UAH')?.value || 0),
-        0
-      );
-      dispatch(setCurrencyUAH(totalSumUAH));
+      dispatch(setCurrencyUSD(totalSumUSD));
+      dispatch(setCurrencyUSD(totalSumUAH));
     }
   }, [selectedOrder, dispatch]);
 
@@ -147,13 +143,7 @@ const Orders = () => {
     <div
       className='container m-0 px-4 py-4 d-flex gap-3'
       style={{ height: 'calc(100vh - 100px)' }}
-      // style={{ overflowY: 'auto', minHeight: 0 }}
-      // className='d-flex w-100'
     >
-      {/* <div
-        className='list-group fade-in flex-grow-1'
-        style={{ overflowY: 'auto', minHeight: 0 }}
-      > */}
       {/* Orders List */}
       <OrdersList
         handleSelectOrder={handleSelectOrder}
@@ -184,7 +174,6 @@ const Orders = () => {
           setIsModalOpen(false);
         }}
       />
-      {/* </div> */}
     </div>
   );
 };

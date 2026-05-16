@@ -1,5 +1,5 @@
-import { AppDispatch, RootState } from '@/store';
-import { setSelectedType } from '@/store/products-slice';
+import { AppDispatch, RootState } from '@/redux';
+import { setSelectedType } from '@/features/products/model/products-slice';
 import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';

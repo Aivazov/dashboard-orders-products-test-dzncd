@@ -1,7 +1,7 @@
-// /src/store/slices/productsSlice.ts
+// /src/features/products/model/products-slice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchProducts } from '@/features/products/api/products';
-import { RootState } from './index';
+import { RootState } from '../../../redux/index';
 import { Products } from './types';
 
 const initialState: Products = {
@@ -22,10 +22,9 @@ const initialState: Products = {
 export const loadProducts = createAsyncThunk(
   'products/loadProducts',
   async (_, { getState }) => {
-    const state = getState() as RootState; // получаем текущие данные состояния
+    const state = getState() as RootState;
     if (state.products.products.length > 0) {
       return state.products.products;
-      // return state.products.products;
     }
     return await fetchProducts();
   },
