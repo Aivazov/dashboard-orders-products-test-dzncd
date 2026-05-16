@@ -20,7 +20,23 @@ const orders = [
     title: 'Order 3',
     date: '2025-02-11 13:48:10',
     description: 'desc',
-    products: [1, 2],
+    products: [1, 3],
+    // get products () { return products }
+  },
+  {
+    id: 4,
+    title: 'Order 4',
+    date: '2026-02-03 12:20:10',
+    description: 'desc',
+    products: [2],
+    // get products () { return products }
+  },
+  {
+    id: 5,
+    title: 'Order 5',
+    date: '2025-02-11 18:02:00',
+    description: 'desc',
+    products: [3],
     // get products () { return products }
   },
 ];

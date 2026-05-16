@@ -17,14 +17,16 @@ const OrderDetails = ({
   handleCloseDetails,
 }: Props) => {
   const selectedOrder = useSelector(
-    (state: RootState) => state.orders.selectedOrder,
+    (state: RootState) => state.orders.selectedOrder
   );
   if (!selectedOrder) return null;
   const tMain = useTranslations('Main');
   return (
     <div
-      className={`p-3 bg-light d-flex justify-content-between appear-animation ${isDisappearing ? 'disappear-animation' : ''}`}
-      style={{ width: '200%' }}
+      className={`p-3 max-w-1/2 bg-light d-flex justify-content-between appear-animation ${
+        isDisappearing ? 'disappear-animation' : ''
+      }`}
+      // style={{ width: '200%' }}
     >
       <div>
         <h2 className='text-lg font-bold'>{selectedOrder.title}</h2>

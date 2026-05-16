@@ -125,26 +125,35 @@ const Orders = () => {
   useEffect(() => {
     if (selectedOrder) {
       const orderProducts = products.filter(
-        (p) => p.order === selectedOrder.id,
+        (p) => p.order === selectedOrder.id
       );
       const totalSumUSD = orderProducts.reduce(
         (sum, p) =>
           sum + (p.price.find((pr) => pr.symbol === 'USD')?.value || 0),
-        0,
+        0
       );
       dispatch(setCurrencyUSD(totalSumUSD));
 
       const totalSumUAH = orderProducts.reduce(
         (sum, p) =>
           sum + (p.price.find((pr) => pr.symbol === 'UAH')?.value || 0),
-        0,
+        0
       );
       dispatch(setCurrencyUAH(totalSumUAH));
     }
   }, [selectedOrder, dispatch]);
 
   return (
-    <div className='d-flex w-100'>
+    <div
+      className='container m-0 px-4 py-4 d-flex gap-3'
+      style={{ height: 'calc(100vh - 100px)' }}
+      // style={{ overflowY: 'auto', minHeight: 0 }}
+      // className='d-flex w-100'
+    >
+      {/* <div
+        className='list-group fade-in flex-grow-1'
+        style={{ overflowY: 'auto', minHeight: 0 }}
+      > */}
       {/* Orders List */}
       <OrdersList
         handleSelectOrder={handleSelectOrder}
@@ -175,6 +184,7 @@ const Orders = () => {
           setIsModalOpen(false);
         }}
       />
+      {/* </div> */}
     </div>
   );
 };

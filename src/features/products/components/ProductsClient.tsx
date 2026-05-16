@@ -12,7 +12,7 @@ import ProductSkeleton from './ProductSkeleton';
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedType, products, loading, error } = useSelector(
-    (state: RootState) => state.products,
+    (state: RootState) => state.products
   );
   const [isVisualLoading, setIsVisualLoading] = useState(false);
 
@@ -33,10 +33,9 @@ const Products = () => {
     if (loading) {
       setIsVisualLoading(true);
     } else {
-      // Когда данные пришли, даем скелетонам докрутиться (например, 600мс всего)
       const timer = setTimeout(() => {
         setIsVisualLoading(false);
-      }, 600); // Время задержки в мс
+      }, 600);
 
       return () => clearTimeout(timer);
     }
@@ -102,33 +101,23 @@ const Products = () => {
   const showSkeletons = loading || isVisualLoading;
 
   return (
-    // <div
-    // className='container px-3 py-4 d-flex flex-column'
-    // style={{ height: 'calc(100vh - 10vh)', overflowY: 'auto' }}
-    // >
     <div
       className='container px-4 py-4 d-flex flex-column'
       style={{ height: 'calc(100vh - 100px)' }}
     >
-      {/* <div className='container mt-4 overflow-y-auto' > */}
       <div className='flex-shrink-0 mb-3'>
         <ProductsTypeSelector />
       </div>
 
       <ul
-        // className='list-group fade-in container'
         className='list-group fade-in flex-grow-1'
         style={{ overflowY: 'auto', minHeight: 0 }}
-        // style={{ height: 'calc(100vh - 10vh)', overflowY: 'auto' }}
       >
-        {/* <ul className='row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 list-unstyled fade-in'> */}
         {showSkeletons
-          ? // Рендерим 4 скелетона во время загрузки
-            Array.from({ length: 4 }).map((_, idx) => (
+          ? Array.from({ length: 4 }).map((_, idx) => (
               <ProductSkeleton key={`skeleton-${idx}`} />
             ))
-          : // Рендерим реальные продукты, когда загрузка завершена
-            filteredProducts.map((product) => (
+          : filteredProducts.map((product) => (
               <li
                 key={product.id}
                 className='card mb-3 w-100 shadow-box flex-shrink-0'

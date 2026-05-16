@@ -16,19 +16,24 @@ const OrdersList = ({ handleSelectOrder, setIsModalOpen }: OrdersListProps) => {
   const orders = useSelector((state: RootState) => state.orders.orders);
 
   return (
-    <ul className='d-flex flex-column gap-3 p-3 list-group cursor-pointer w-100 fade-in'>
+    <ul
+      className='list-group fade-in flex-grow-1 max-w-1/2 gap-3'
+      // className='list-group fade-in flex-grow-1 min-w-1/3 gap-[5px]'
+      style={{ overflowY: 'auto', minHeight: 0 }}
+    >
+      {/* <ul className='d-flex flex-column gap-3 p-3 list-group cursor-pointer w-100 fade-in'> */}
       {orders.map((order) => {
         const orderProducts = products.filter((p) => p.order === order.id);
         const totalSumUSD = orderProducts.reduce(
           (sum, p) =>
             sum + (p.price.find((pr) => pr.symbol === 'USD')?.value || 0),
-          0,
+          0
         );
         // setCurrencyUSD(totalSumUSD)
         const totalSumUAH = orderProducts.reduce(
           (sum, p) =>
             sum + (p.price.find((pr) => pr.symbol === 'UAH')?.value || 0),
-          0,
+          0
         );
         // setCurrencyUAH(totalSumUAH)
 
