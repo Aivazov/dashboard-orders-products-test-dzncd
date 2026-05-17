@@ -10,7 +10,8 @@
   },
   "TopMenu": {
     "title": "Панель",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "sessions": "Активных сессий"
   },
   "Sidebar": {
     "menuItemOrders": "Приход",

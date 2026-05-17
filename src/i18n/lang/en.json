@@ -10,7 +10,8 @@
   },
   "TopMenu": {
     "title": "Dashboard",
-    "logout": "Logout"
+    "logout": "Logout",
+    "sessions": "Active sessions"
   },
   "Sidebar": {
     "menuItemOrders": "Orders",

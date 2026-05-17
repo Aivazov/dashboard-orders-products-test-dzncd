@@ -34,7 +34,7 @@ const TopMenuDate = () => {
   };
 
   return (
-    <div className='d-flex justify-content-end border p-2 rounded-3 '>
+    <div className='d-flex justify-content-end border p-2 rounded-3 font-monospace'>
       {/* <div className='w-50 d-flex justify-content-end'> only w-50 */}
       <div className='d-flex flex-column align-items-start text-start'>
         <p className='mb-0'>{formatWeekday(currentTime)}</p>
