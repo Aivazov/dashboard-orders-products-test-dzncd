@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import Spinner from '../ui/Modal/Spinner';
 import { useTranslations } from 'next-intl';
-
-const SOCKET_SERVER_URL = 'http://localhost:3001';
+import { SOCKET_SERVER_URL } from '@/api/config';
 
 const ActiveSessionsCounter = () => {
   const t = useTranslations('TopMenu');
@@ -13,7 +12,7 @@ const ActiveSessionsCounter = () => {
     // Connection init
     const socket: Socket = io(SOCKET_SERVER_URL);
 
-    // listen to event from server
+    // listen to event from the server
     socket.on('counter-update', (count: number) => {
       setActiveUsers(count);
     });

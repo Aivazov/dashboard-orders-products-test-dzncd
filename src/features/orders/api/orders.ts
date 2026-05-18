@@ -1,11 +1,12 @@
 // /src/features/orders/api/orders.ts
 
+import { GRAPHQL_SERVER_URL } from '@/api/config';
 import axios from 'axios';
 
 export const fetchOrders = async () => {
   try {
     const response = await axios.post(
-      'http://localhost:3001/graphql',
+      GRAPHQL_SERVER_URL,
       {
         query: `
           query {
