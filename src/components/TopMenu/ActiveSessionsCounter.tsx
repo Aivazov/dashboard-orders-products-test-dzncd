@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import Spinner from '../ui/Modal/Spinner';
+import Spinner from '../ui/Spinner';
 import { useTranslations } from 'next-intl';
 import { SOCKET_SERVER_URL } from '@/api/config';
 

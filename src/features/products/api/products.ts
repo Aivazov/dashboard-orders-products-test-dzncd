@@ -1,6 +1,7 @@
 // /src/features/products/api/products.ts
 
 import { GRAPHQL_SERVER_URL } from '@/api/config';
+import { serverError } from '@/api/errorHandler';
 import axios from 'axios';
 
 export const fetchProducts = async () => {
@@ -69,7 +70,9 @@ export const fetchProducts = async () => {
 
     // return data.data.products;
   } catch (error) {
-    console.error('Error fetching products:', error);
-    throw error;
+    serverError(error);
+
+    // console.error('Error fetching products:', error);
+    throw new Error('Unexpected error');
   }
 };

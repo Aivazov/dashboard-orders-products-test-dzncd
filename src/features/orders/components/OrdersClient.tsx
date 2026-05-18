@@ -17,12 +17,15 @@ import OrderDetails from './OrderDetails';
 import DeleteOrderModal from './DeleteOrderModal';
 import OrdersList from './OrdersList/OrdersList';
 import { calculateCurrencyTotal } from '../utils/calculateCurrencyTotal';
+import ErrorMessage from '@/components/ui/ErrorMessage';
 
 const Orders = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDisappearing, setIsDisappearing] = useState(false);
+
+  const error = useSelector((state: RootState) => state.orders.error);
 
   const selectedOrder = useSelector(
     (state: RootState) => state.orders.selectedOrder,
@@ -138,6 +141,19 @@ const Orders = () => {
       dispatch(setCurrencyUSD(totalSumUAH));
     }
   }, [selectedOrder, dispatch]);
+
+  // if (error) {
+  //   return (
+  //     <div className='container px-4 py-4'>
+  //       <div className='alert alert-danger' role='alert'>
+  //         Error: {error}
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  if (error) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <div

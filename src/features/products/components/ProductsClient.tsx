@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '@/redux';
 import ProductsTypeSelector from './ProductsTypeSelector';
 import ProductCard from './ProductCard/ProductCard';
 import ProductSkeleton from './ProductSkeleton';
+import ErrorMessage from '@/components/ui/ErrorMessage';
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -94,17 +95,11 @@ const Products = () => {
   //   return <div>Loading...</div>;
   // }
 
-  if (error) {
-    return (
-      <div className='container px-4 py-4'>
-        <div className='alert alert-danger' role='alert'>
-          Error: {error}
-        </div>
-      </div>
-    );
-  }
-
   const showSkeletons = loading || isVisualLoading;
+
+  if (error) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <div

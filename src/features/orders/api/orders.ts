@@ -1,6 +1,7 @@
 // /src/features/orders/api/orders.ts
 
 import { GRAPHQL_SERVER_URL } from '@/api/config';
+import { serverError } from '@/api/errorHandler';
 import axios from 'axios';
 
 export const fetchOrders = async () => {
@@ -50,7 +51,9 @@ export const fetchOrders = async () => {
 
     return response.data.data.orders;
   } catch (error) {
-    console.log('Error fetching orders: ', error);
+    serverError(error);
+
+    // console.log('Error fetching orders: ', error);
 
     throw error;
   }
