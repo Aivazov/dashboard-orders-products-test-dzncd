@@ -1,16 +1,13 @@
 // /src/features/orders/model/orders-slice.ts
 
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import ordersData from '@/utils/orders';
 import { Order } from '@/features/orders/types';
-// import { RootState } from '../../../redux/index';
 import { OrdersState } from './types';
 import { fetchOrders } from '../api/orders';
 import { RootState } from '@/redux';
 
 const initialState: OrdersState = {
   orders: [],
-  // orders: ordersData,
   loading: false,
   error: null,
   selectedOrder: null,

@@ -1,9 +1,4 @@
-export interface Order {
-  id: number;
-  title: string;
-  date: string;
-  products: number[];
-}
+// src/features/orders/types.ts
 
 export interface OrderProducts {
   id: number;
@@ -26,3 +21,10 @@ export interface OrderProducts {
   date: string;
 }
 [];
+
+export interface Order {
+  id: number;
+  title: string;
+  date: string;
+  products: OrderProducts[];
+}

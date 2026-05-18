@@ -2,7 +2,7 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import { Order, OrderProducts } from '@/features/orders/types';
+import { Order } from '@/features/orders/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux';
 import {
@@ -12,7 +12,6 @@ import {
   setOrderToDelete,
   setSelectedOrder,
 } from '@/features/orders/model/orders-slice';
-import products from '@/utils/products';
 import OrderDetails from './OrderDetails';
 import DeleteOrderModal from './DeleteOrderModal';
 import OrdersList from './OrdersList/OrdersList';
@@ -28,16 +27,16 @@ const Orders = () => {
   const error = useSelector((state: RootState) => state.orders.error);
 
   const selectedOrder = useSelector(
-    (state: RootState) => state.orders.selectedOrder,
+    (state: RootState) => state.orders.selectedOrder
   );
   const orderToDelete = useSelector(
-    (state: RootState) => state.orders.orderToDelete,
+    (state: RootState) => state.orders.orderToDelete
   );
   const currencyUSD = useSelector(
-    (state: RootState) => state.orders.currencyUSD,
+    (state: RootState) => state.orders.currencyUSD
   );
   const currencyUAH = useSelector(
-    (state: RootState) => state.orders.currencyUAH,
+    (state: RootState) => state.orders.currencyUAH
   );
 
   // const isAuthenticated = useSelector(
@@ -78,14 +77,6 @@ const Orders = () => {
 
   // const handleDeleteOrder = () => {
   //   if (orderToDelete) {
-  //     setOrders(orders.filter((order) => order.id !== orderToDelete.id));
-  //     setSelectedOrder(null);
-  //     setOrderToDelete(null);
-  //   }
-  // };
-
-  // const handleDeleteOrder = () => {
-  //   if (orderToDelete) {
   //     setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderToDelete.id));
   //     setSelectedOrder(null);
   //     setOrderToDelete(null);
@@ -95,62 +86,21 @@ const Orders = () => {
   //   }
   // };
 
-  // const handleOpenDeleteModal = (order: Order) => {
-  //   dispatch(setOrderToDelete(order));
-  //   const modalElement = document.getElementById("deleteOrderModal");
-  //   const modal = new window.bootstrap.Modal(modalElement);
-  //   // const modal = new Modal(modalElement);
-  //   modal.show();
-  // };
-
-  // const handleOpenDeleteModal = (order: Order) => {
-  //   dispatch(setOrderToDelete(order));
-  //   const modalElement = document.getElementById('deleteOrderModal');
-  //   if (modalElement) {
-  //     // const modal = new (ModalBootstrap as any).Modal(modalElement);
-  //     const modal = new Modal(modalElement);
-  //     // const modal = new window.bootstrap.Modal(modalElement);
-  //     modal.show();
-  //   } else {
-  //     console.error('Modal element not found');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined' && window.bootstrap) {
-  //     const modalElement = document.getElementById('deleteOrderModal');
-  //     if (modalElement) {
-  //       // const modal = new (ModalBootstrap as any).Modal(modalElement);
-  //       const modal = new Modal(modalElement);
-  //       // const modal = new window.bootstrap.Modal(modalElement);
-  //       modal.show();
-  //     }
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (selectedOrder) {
-      // const orderProducts = order.products || [];
-      const orderProducts = products.filter(
-        (p) => p.order === selectedOrder.id,
-      );
+      const orderProducts = selectedOrder.products || [];
+      // const orderProducts = products.filter(
+      //   (p) => p.order === selectedOrder.id
+      // );
+
       const totalSumUSD = calculateCurrencyTotal(orderProducts, 'USD');
       const totalSumUAH = calculateCurrencyTotal(orderProducts, 'UAH');
 
       dispatch(setCurrencyUSD(totalSumUSD));
-      dispatch(setCurrencyUSD(totalSumUAH));
+      dispatch(setCurrencyUAH(totalSumUAH));
     }
   }, [selectedOrder, dispatch]);
 
-  // if (error) {
-  //   return (
-  //     <div className='container px-4 py-4'>
-  //       <div className='alert alert-danger' role='alert'>
-  //         Error: {error}
-  //       </div>
-  //     </div>
-  //   );
-  // }
   if (error) {
     return <ErrorMessage error={error} />;
   }
@@ -169,7 +119,7 @@ const Orders = () => {
       {/* Order Details */}
       {selectedOrder && (
         <OrderDetails
-          products={products}
+          // products={products}
           isDisappearing={isDisappearing}
           handleCloseDetails={handleCloseDetails}
         />

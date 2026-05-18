@@ -12,13 +12,6 @@ const initialState: Products = {
   error: null,
 };
 
-// export const loadProducts = createAsyncThunk(
-//   'products/loadProducts',
-//   async () => {
-//     return await fetchProducts();
-//   }
-// );
-
 export const loadProducts = createAsyncThunk(
   'products/loadProducts',
   async (_, { getState }) => {

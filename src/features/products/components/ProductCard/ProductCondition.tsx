@@ -1,6 +1,6 @@
 import { Product } from '../../types';
-import css from '../../styles/Products.module.css';
 import { useTranslations } from 'next-intl';
+import css from '../../styles/Products.module.css';
 
 type ProductConditionProps = {
   product: Product;

@@ -1,8 +1,4 @@
-import React from 'react';
-
-type Props = {};
-
-const OrdersSkeleton = (props: Props) => {
+const OrdersSkeleton = () => {
   return (
     <li
       className='card mb-3 w-100 shadow-box flex-shrink-0 placeholder-glow'

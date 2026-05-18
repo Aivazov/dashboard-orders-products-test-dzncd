@@ -48,6 +48,7 @@ export const fetchOrders = async () => {
     );
 
     if (response.data.errors) throw new Error(response.data.errors[0].message);
+    // console.log('data from features/orders/api/orders.ts: ', response.data.data.orders);
 
     return response.data.data.orders;
   } catch (error) {

@@ -1,18 +1,18 @@
 // src/features/products/components/OrderDetails.tsx
-import { Product } from '@/features/products/types';
+// import { Product } from '@/features/products/types';
 import { RootState } from '@/redux';
 import { formatDate } from '@/utils/formatDate';
 import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
 
 type Props = {
-  products: Product[];
+  // products: Product[];
   isDisappearing: boolean;
   handleCloseDetails: () => void;
 };
 
 const OrderDetails = ({
-  products,
+  // products,
   isDisappearing,
   handleCloseDetails,
 }: Props) => {
@@ -21,6 +21,8 @@ const OrderDetails = ({
   );
   if (!selectedOrder) return null;
   const tMain = useTranslations('Main');
+
+  const orderProducts = selectedOrder.products || [];
   return (
     <div
       className={`p-3 max-w-1/2 bg-light d-flex justify-content-between appear-animation ${
@@ -33,7 +35,14 @@ const OrderDetails = ({
         <p>Date: {formatDate(selectedOrder.date, false)}</p>
         <h3 className='mt-4 font-semibold'>{tMain('products')}:</h3>
         <ul>
-          {products
+          {orderProducts.map((product) => (
+            <li key={product.id}>
+              {product.title} —{' '}
+              {product.price.find((p) => p.symbol === 'USD')?.value} USD /{' '}
+              {product.price.find((p) => p.symbol === 'UAH')?.value} UAH
+            </li>
+          ))}
+          {/* {products
             .filter((p) => p.order === selectedOrder.id)
             .map((product) => (
               <li key={product.id}>
@@ -41,7 +50,7 @@ const OrderDetails = ({
                 {product.price.find((p) => p.symbol === 'USD')?.value} USD /
                 {product.price.find((p) => p.symbol === 'UAH')?.value} UAH
               </li>
-            ))}
+            ))} */}
         </ul>
       </div>
       <div>

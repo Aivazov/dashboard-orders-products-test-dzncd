@@ -1,6 +1,5 @@
 // src/features/products/components/ProductCard/ProductCard.tsx
 
-'use client';
 import { Product } from '../../types';
 import ProductImage from './ProductImage';
 import ProductTitle from './ProductTitle';
