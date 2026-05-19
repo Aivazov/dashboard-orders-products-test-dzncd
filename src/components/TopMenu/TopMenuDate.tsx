@@ -1,14 +1,22 @@
+// src/components/TopMenu/TopMenuDate.tsx
+
 'use client';
 import { formatTime } from '@/utils/formatDate';
 import { useLocale } from 'next-intl';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { FaRegClock } from 'react-icons/fa6';
+import Spinner from '../ui/Spinner';
 
 const TopMenuDate = () => {
-  const [currentTime, setCurrentTime] = React.useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
   const locale = useLocale();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setIsMounted(true);
+    setCurrentTime(new Date());
+
     const interval = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
@@ -32,10 +40,30 @@ const TopMenuDate = () => {
 
     return new Intl.DateTimeFormat(locale, options).format(date);
   };
+  if (!isMounted || !currentTime) {
+    return (
+      <div
+        className='d-flex justify-content-end border p-2 rounded-3 font-monospace'
+        style={{ visibility: 'hidden' }}
+      >
+        <div className='d-flex flex-column align-items-start text-start'>
+          <Spinner />
+          <div className='d-flex gap-2'>
+            <span>00.00.0000</span>
+            <span className='d-flex align-items-center'>
+              <span className='me-1'>
+                <FaRegClock className='logo__sign-color' />
+              </span>
+              00:00
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='d-flex justify-content-end border p-2 rounded-3 font-monospace'>
-      {/* <div className='w-50 d-flex justify-content-end'> only w-50 */}
       <div className='d-flex flex-column align-items-start text-start'>
         <p className='mb-0'>{formatWeekday(currentTime)}</p>
         <div className='d-flex gap-2'>

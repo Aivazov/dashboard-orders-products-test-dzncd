@@ -6,7 +6,8 @@
     "orders": "Orders",
     "order": "Order",
     "products": "Products",
-    "product": "Product"
+    "product": "Product",
+    "add": "Add"
   },
   "TopMenu": {
     "title": "Dashboard",
@@ -29,10 +30,51 @@
     "conditionNew": "new",
     "conditionUsed": "used"
   },
+  "ProductAddModal": {
+    "title": "Add product",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Example: Monitor Dell 27\"",
+      "type": "Type",
+      "typePlaceholder": "— Select —",
+      "condition": "Condition",
+      "conditionNew": "New",
+      "conditionUsed": "Used",
+      "serialNumber": "Serial number",
+      "serialNumberPlaceholder": "SN-XXXXXXXX",
+      "priceUSD": "Price USD",
+      "priceUAH": "Price UAH",
+      "guarantee": "Guarantee",
+      "order": "Order",
+      "orderPlaceholder": "— Select order —"
+    }
+  },
+  "ProductAddSchema": {
+    "fields": {
+      "type": {
+        "placeholder": "Select type"
+      },
+      "date": {
+        "placeholder": "Select date"
+      },
+      "order": {
+        "placeholder": "Select order"
+      }
+    },
+    "errors": {
+      "required": "Required field",
+      "enterNumber": "Please enter a number",
+      "positiveNumber": "Must be greater than 0",
+      "dateOrder": "End date cannot be earlier than start date",
+      "minLength": "Minimum {count} {count, plural, one{character} other{characters}}"
+    }
+  },
   "Orders": {
     "modalDeleteTitle": "Deletion of the order",
     "modalDeleteQuestion": "Are you sure you want to delete",
+    "products": "Products",
     "sum": "Sum",
-    "order": "Order"
+    "order": "Order",
+    "date": "Date"
   }
 }

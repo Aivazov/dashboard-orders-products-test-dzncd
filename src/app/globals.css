@@ -76,6 +76,11 @@ body {
   /* box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); */
 }
 
+.green-color {
+  background-color: rgb(124, 179, 66) !important;
+  border: 1px solid rgb(124, 179, 66) !important;
+}
+
 .nav-link--hover:hover {
   /* background-color: #a3a4a5;  */
   background-color: rgb(124, 179, 66);
@@ -97,10 +102,6 @@ body {
   color: white;
   background-color: rgb(124, 179, 66);
   /* background-color: #a1a1a1; */
-}
-
-.cursor__pointer {
-  cursor: pointer;
 }
 
 /* TRANSITIONS */

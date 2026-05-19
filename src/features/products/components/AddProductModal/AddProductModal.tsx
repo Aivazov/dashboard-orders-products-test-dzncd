@@ -7,11 +7,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux';
-import { createProduct } from '../model/products-slice';
+import { createProduct } from '../../model/products-slice';
 import { loadOrders } from '@/features/orders/model/orders-slice';
 import Modal from '@/components/ui/Modal/Modal';
 import { useTranslations } from 'next-intl';
-import { ProductFormValues, productSchema } from '../schemas/addProductSchema';
+import {
+  ProductFormValues,
+  getProductSchema,
+} from '../../schemas/addProductSchema';
 
 type AddProductModalProps = {
   isOpen: boolean;
@@ -20,7 +23,13 @@ type AddProductModalProps = {
 
 const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  const t = useTranslations('Main');
+
+  const tMain = useTranslations('Main');
+  const tModal = useTranslations('ProductAddModal');
+  const tFilter = useTranslations('ProductsFilter');
+  const tProductAddSchema = useTranslations('ProductAddSchema');
+
+  const schema = getProductSchema(tProductAddSchema);
 
   const orders = useSelector((state: RootState) => state.orders.orders);
   const isSubmitting = useSelector(
@@ -33,20 +42,18 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
     reset,
     formState: { errors },
   } = useForm<ProductFormValues>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       isNewProduct: true,
     },
   });
 
-  // Загрузить заказы для селекта, если ещё не загружены
   useEffect(() => {
     if (isOpen && orders.length === 0) {
       dispatch(loadOrders());
     }
   }, [isOpen, orders.length, dispatch]);
 
-  // Сбросить форму при закрытии
   useEffect(() => {
     if (!isOpen) reset();
   }, [isOpen, reset]);
@@ -62,7 +69,7 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title='Добавить продукт'
+      title={tModal('title')}
       footer={
         <>
           <button
@@ -71,48 +78,53 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
             onClick={onClose}
             disabled={isSubmitting}
           >
-            {t('cancel')}
+            {tMain('cancel')}
           </button>
           <button
             type='submit'
-            className='btn btn-primary'
+            className='btn btn-primary green-color'
             onClick={handleSubmit(onSubmit)}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <span className='spinner-border spinner-border-sm me-2' />
             ) : null}
-            Добавить
+            {tMain('add')}
           </button>
         </>
       }
     >
       <div className='d-flex flex-column gap-3'>
-        {/* Название */}
+        {/* Product Title*/}
         <div>
-          <label className='form-label fw-semibold'>Название</label>
+          <label className='form-label fw-semibold'>
+            {tModal('fields.title')}
+          </label>
           <input
             {...register('title')}
             className={`form-control ${errors.title ? 'is-invalid' : ''}`}
-            placeholder='Например: Monitor Dell 27"'
+            placeholder={`${tModal('fields.titlePlaceholder')}: Monitor Dell 27`}
+            // placeholder='Например: Monitor Dell 27"'
           />
           {errors.title && (
             <div className='invalid-feedback'>{errors.title.message}</div>
           )}
         </div>
 
-        {/* Тип + Состояние в одну строку */}
+        {/* Type / Condition */}
         <div className='d-flex gap-3'>
           <div className='flex-grow-1'>
-            <label className='form-label fw-semibold'>Тип</label>
+            <label className='form-label fw-semibold'>
+              {tModal('fields.type')}
+            </label>
             <select
               {...register('type')}
               className={`form-select ${errors.type ? 'is-invalid' : ''}`}
             >
-              <option value=''>— Выберите —</option>
-              <option value='monitors'>Монитор</option>
-              <option value='tablets'>Планшет</option>
-              <option value='laptops'>Ноутбук</option>
+              <option value=''>{tModal('fields.typePlaceholder')}</option>
+              <option value='monitors'>{tFilter('monitors')}</option>
+              <option value='tablets'>{tFilter('tablets')}</option>
+              <option value='laptops'>{tFilter('laptops')}</option>
             </select>
             {errors.type && (
               <div className='invalid-feedback'>{errors.type.message}</div>
@@ -120,24 +132,28 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
           </div>
 
           <div className='flex-grow-1'>
-            <label className='form-label fw-semibold'>Состояние</label>
+            <label className='form-label fw-semibold'>
+              {tModal('fields.condition')}
+            </label>
             <select
               {...register('isNewProduct', { setValueAs: (v) => v === 'true' })}
               className='form-select'
             >
-              <option value='true'>Новый</option>
-              <option value='false'>Б/у</option>
+              <option value='true'>{tModal('fields.conditionNew')}</option>
+              <option value='false'>{tModal('fields.conditionUsed')}</option>
             </select>
           </div>
         </div>
 
-        {/* Серийный номер */}
+        {/* Serial Number */}
         <div>
-          <label className='form-label fw-semibold'>Серийный номер</label>
+          <label className='form-label fw-semibold'>
+            {tModal('fields.serialNumber')}
+          </label>
           <input
             {...register('serialNumber')}
             className={`form-control ${errors.serialNumber ? 'is-invalid' : ''}`}
-            placeholder='SN-XXXXXXXX'
+            placeholder={tModal('fields.serialNumberPlaceholder')}
           />
           {errors.serialNumber && (
             <div className='invalid-feedback'>
@@ -149,7 +165,9 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
         {/* Цена USD + UAH */}
         <div className='d-flex gap-3'>
           <div className='flex-grow-1'>
-            <label className='form-label fw-semibold'>Цена USD</label>
+            <label className='form-label fw-semibold'>
+              {tModal('fields.priceUSD')}
+            </label>
             <input
               {...register('priceUSD', {
                 valueAsNumber: true,
@@ -166,7 +184,9 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
           </div>
 
           <div className='flex-grow-1'>
-            <label className='form-label fw-semibold'>Цена UAH</label>
+            <label className='form-label fw-semibold'>
+              {tModal('fields.priceUAH')}
+            </label>
             <input
               {...register('priceUAH', {
                 valueAsNumber: true,
@@ -183,9 +203,11 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
           </div>
         </div>
 
-        {/* Гарантия */}
+        {/* Guarantee */}
         <div>
-          <label className='form-label fw-semibold'>Гарантия</label>
+          <label className='form-label fw-semibold'>
+            {tModal('fields.guarantee')}
+          </label>
           <div className='d-flex gap-3'>
             <div className='flex-grow-1'>
               <input
@@ -215,16 +237,18 @@ const AddProductModal = ({ isOpen, onClose }: AddProductModalProps) => {
           </div>
         </div>
 
-        {/* Приход */}
+        {/* Order */}
         <div>
-          <label className='form-label fw-semibold'>Приход (заказ)</label>
+          <label className='form-label fw-semibold'>
+            {tModal('fields.order')}
+          </label>
           <select
             {...register('order', {
               valueAsNumber: true,
             })}
             className={`form-select ${errors.order ? 'is-invalid' : ''}`}
           >
-            <option value=''>— Выберите приход —</option>
+            <option value=''>{tModal('fields.orderPlaceholder')}</option>
             {orders.map((o) => (
               <option key={o.id} value={o.id}>
                 {o.title}

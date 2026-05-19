@@ -9,7 +9,7 @@ import ProductsTypeSelector from './ProductsTypeSelector';
 import ProductCard from './ProductCard/ProductCard';
 import ProductSkeleton from './ProductSkeleton';
 import ErrorMessage from '@/components/ui/ErrorMessage';
-import AddProductModal from './AddProductModal';
+import AddProductModal from './AddProductModal/AddProductModal';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 const Products = () => {
@@ -113,7 +113,7 @@ const Products = () => {
         <ProductsTypeSelector />
 
         <button
-          className='btn btn-primary d-flex align-items-center gap-2 flex-shrink-0'
+          className='btn btn-primary d-flex align-items-center gap-2 flex-shrink-0 green-color'
           onClick={() => setIsAddModalOpen(true)}
         >
           <AiOutlinePlus />

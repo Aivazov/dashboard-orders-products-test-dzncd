@@ -49,7 +49,7 @@ const AddOrderModal = ({ isOpen, onClose }: AddOrderModalProps) => {
         <>
           <button
             type='button'
-            className='btn btn-secondary'
+            className='btn btn-secondary border-0'
             onClick={onClose}
             disabled={isSubmitting}
           >
@@ -57,12 +57,12 @@ const AddOrderModal = ({ isOpen, onClose }: AddOrderModalProps) => {
           </button>
           <button
             type='button'
-            className='btn btn-primary'
+            className='btn btn-primary green-color'
             onClick={handleSubmit(onSubmit)}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
-              <span className='spinner-border spinner-border-sm me-2' />
+              <span className='spinner-border spinner-border-sm me-2 ' />
             ) : null}
             Добавить
           </button>

@@ -6,8 +6,13 @@ import { Dispatch, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Order, OrderProducts } from '../../types';
-import { setOrderToDelete } from '@/features/orders/model/orders-slice';
+import {
+  setCurrencyUAH,
+  setCurrencyUSD,
+  setOrderToDelete,
+} from '@/features/orders/model/orders-slice';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { useTranslations } from 'next-intl';
 
 type OrdersCardProps = {
   order: Order;
@@ -30,24 +35,32 @@ const OrdersCard = ({
   const selectedOrder = useSelector(
     (state: RootState) => state.orders.selectedOrder,
   );
+
+  const tOrders = useTranslations('Orders');
   return (
     <li
-      className={`list-group-item border rounded list-group-item-action cursor__pointer shadow-box nav-link--custom ${selectedOrder?.id === order.id ? 'active' : ''}`}
+      className={`list-group-item border rounded list-group-item-action cursor-pointer shadow-box nav-link--custom ${selectedOrder?.id === order.id ? 'active' : ''}`}
       onClick={() => handleSelectOrder(order)}
     >
       <div className='d-flex justify-content-between w-100'>
         <div>
           <h3 className='font-weight-bold'>{order.title}</h3>
-          <p>Products: {orderProducts.length}</p>
+          <p>
+            {tOrders('products')}: {orderProducts.length}
+          </p>
         </div>
         <div>
           <button
             type='button'
             className='btn btn-secondary'
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
 
               dispatch(setOrderToDelete(order));
+
+              dispatch(setCurrencyUSD(totalSumUSD));
+              dispatch(setCurrencyUAH(totalSumUAH));
+
               setIsModalOpen(true);
             }}
           >
@@ -56,9 +69,11 @@ const OrdersCard = ({
         </div>
       </div>
       <div>
-        <p>Дата: {formatDate(order.date, false)}</p>
         <p>
-          Сумма: {totalSumUSD} USD / {totalSumUAH} UAH
+          {tOrders('date')}: {formatDate(order.date, false)}
+        </p>
+        <p>
+          {tOrders('sum')}: {totalSumUSD} USD / {totalSumUAH} UAH
         </p>
       </div>
     </li>

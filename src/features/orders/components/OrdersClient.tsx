@@ -113,16 +113,14 @@ const Orders = () => {
       className='container m-0 px-4 py-4 d-flex gap-3'
       style={{ height: 'calc(100vh - 100px)' }}
     >
-      {/* Toolbar */}
+      {/* Add Order */}
       <div className='flex-shrink-0 d-flex justify-content-end'>
         <button
-          className='btn btn-primary d-flex align-items-center justify-content-center'
+          className='btn btn-primary d-flex align-items-center justify-content-center green-color'
           style={{ width: 40, height: 40 }}
-          // className='btn btn-primary d-flex align-items-center gap-2 w-[30px] h-[30px] d-block'
           onClick={() => setIsAddOrderModalOpen(true)}
         >
           <AiOutlinePlus />
-          {/* Добавить приход */}
         </button>
       </div>
 

@@ -6,7 +6,8 @@
     "orders": "Заказы",
     "order": "Заказ",
     "products": "Товары",
-    "product": "Товар"
+    "product": "Товар",
+    "add": "Добавить"
   },
   "TopMenu": {
     "title": "Панель",
@@ -29,10 +30,51 @@
     "conditionNew": "новый",
     "conditionUsed": "б / у"
   },
+  "ProductAddModal": {
+    "title": "Добавить продукт",
+    "fields": {
+      "title": "Название",
+      "titlePlaceholder": "Например: Monitor Dell 27\"",
+      "type": "Тип",
+      "typePlaceholder": "— Выберите —",
+      "condition": "Состояние",
+      "conditionNew": "Новый",
+      "conditionUsed": "Б/у",
+      "serialNumber": "Серийный номер",
+      "serialNumberPlaceholder": "SN-XXXXXXXX",
+      "priceUSD": "Цена USD",
+      "priceUAH": "Цена UAH",
+      "guarantee": "Гарантия",
+      "order": "Приход (заказ)",
+      "orderPlaceholder": "— Выберите приход —"
+    }
+  },
+  "ProductAddSchema": {
+    "fields": {
+      "type": {
+        "placeholder": "Выберите тип"
+      },
+      "date": {
+        "placeholder": "Укажите дату"
+      },
+      "order": {
+        "placeholder": "Выберите приход"
+      }
+    },
+    "errors": {
+      "required": "Обязательное поле",
+      "enterNumber": "Введите число",
+      "positiveNumber": "Должно быть больше 0",
+      "dateOrder": "Дата окончания не может быть раньше начала",
+      "minLength": "Минимум {count} {count, plural, one{символ} few{символа} many{символов} other{символа}}"
+    }
+  },
   "Orders": {
     "modalDeleteTitle": "Удаление заказа",
     "modalDeleteQuestion": "Вы уверены, что хотите удалить",
+    "products": "Товаров",
     "sum": "Сумма",
-    "order": "Заказ"
+    "order": "Заказ",
+    "date": "Дата"
   }
 }
