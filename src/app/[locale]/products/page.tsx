@@ -1,5 +1,6 @@
+// src/app/[locale]/orders/page.tsx
+
 import Products from '@/features/products/components/ProductsClient';
-import React from 'react';
 
 type Props = {};
 

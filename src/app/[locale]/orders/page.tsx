@@ -1,3 +1,4 @@
+// src/app/[locale]/orders/page.tsx
 import Orders from '@/features/orders/components/OrdersClient';
 
 type Props = {};
