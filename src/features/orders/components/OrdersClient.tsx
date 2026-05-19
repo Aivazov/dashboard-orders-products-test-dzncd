@@ -17,26 +17,29 @@ import DeleteOrderModal from './DeleteOrderModal';
 import OrdersList from './OrdersList/OrdersList';
 import { calculateCurrencyTotal } from '../utils/calculateCurrencyTotal';
 import ErrorMessage from '@/components/ui/ErrorMessage';
+import AddOrderModal from './AddOrderModal';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const Orders = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDisappearing, setIsDisappearing] = useState(false);
+  const [isAddOrderModalOpen, setIsAddOrderModalOpen] = useState(false);
 
   const error = useSelector((state: RootState) => state.orders.error);
 
   const selectedOrder = useSelector(
-    (state: RootState) => state.orders.selectedOrder
+    (state: RootState) => state.orders.selectedOrder,
   );
   const orderToDelete = useSelector(
-    (state: RootState) => state.orders.orderToDelete
+    (state: RootState) => state.orders.orderToDelete,
   );
   const currencyUSD = useSelector(
-    (state: RootState) => state.orders.currencyUSD
+    (state: RootState) => state.orders.currencyUSD,
   );
   const currencyUAH = useSelector(
-    (state: RootState) => state.orders.currencyUAH
+    (state: RootState) => state.orders.currencyUAH,
   );
 
   // const isAuthenticated = useSelector(
@@ -110,6 +113,19 @@ const Orders = () => {
       className='container m-0 px-4 py-4 d-flex gap-3'
       style={{ height: 'calc(100vh - 100px)' }}
     >
+      {/* Toolbar */}
+      <div className='flex-shrink-0 d-flex justify-content-end'>
+        <button
+          className='btn btn-primary d-flex align-items-center justify-content-center'
+          style={{ width: 40, height: 40 }}
+          // className='btn btn-primary d-flex align-items-center gap-2 w-[30px] h-[30px] d-block'
+          onClick={() => setIsAddOrderModalOpen(true)}
+        >
+          <AiOutlinePlus />
+          {/* Добавить приход */}
+        </button>
+      </div>
+
       {/* Orders List */}
       <OrdersList
         handleSelectOrder={handleSelectOrder}
@@ -139,6 +155,11 @@ const Orders = () => {
           handleDeleteOrder();
           setIsModalOpen(false);
         }}
+      />
+
+      <AddOrderModal
+        isOpen={isAddOrderModalOpen}
+        onClose={() => setIsAddOrderModalOpen(false)}
       />
     </div>
   );

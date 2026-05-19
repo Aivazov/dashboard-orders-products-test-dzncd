@@ -9,6 +9,8 @@ import ProductsTypeSelector from './ProductsTypeSelector';
 import ProductCard from './ProductCard/ProductCard';
 import ProductSkeleton from './ProductSkeleton';
 import ErrorMessage from '@/components/ui/ErrorMessage';
+import AddProductModal from './AddProductModal';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +23,7 @@ const Products = () => {
   const error = useSelector((state: RootState) => state.products.error);
 
   const [isVisualLoading, setIsVisualLoading] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const filteredProducts =
     selectedType === 'all'
@@ -108,6 +111,14 @@ const Products = () => {
     >
       <div className='flex-shrink-0 mb-3'>
         <ProductsTypeSelector />
+
+        <button
+          className='btn btn-primary d-flex align-items-center gap-2 flex-shrink-0'
+          onClick={() => setIsAddModalOpen(true)}
+        >
+          <AiOutlinePlus />
+          Добавить продукт
+        </button>
       </div>
 
       <ul
@@ -127,6 +138,11 @@ const Products = () => {
               </li>
             ))}
       </ul>
+
+      <AddProductModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
     </div>
   );
 };

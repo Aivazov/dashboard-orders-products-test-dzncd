@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <ProductCondition product={product} />
         <ProductType product={product} />
         <ProductPrice product={product} />
-        <ProductOrder product={product} />
+        {/* <ProductOrder product={product} /> */}
       </div>
     </div>
   );

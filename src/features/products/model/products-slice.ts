@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchProducts } from '@/features/products/api/products';
 import { RootState } from '../../../redux/index';
 import { Products } from './types';
+import { addProduct, AddProductInput } from '../api/addProduct';
 
 const initialState: Products = {
   selectedType: 'all',
@@ -20,6 +21,13 @@ export const loadProducts = createAsyncThunk(
       return state.products.products;
     }
     return await fetchProducts();
+  },
+);
+
+export const createProduct = createAsyncThunk(
+  'products/createProduct',
+  async (input: AddProductInput) => {
+    return addProduct(input);
   },
 );
 
@@ -46,6 +54,18 @@ const productsSlice = createSlice({
       .addCase(loadProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'An error occurred';
+      })
+      .addCase(createProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products.unshift(action.payload);
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to create product';
       });
   },
 });

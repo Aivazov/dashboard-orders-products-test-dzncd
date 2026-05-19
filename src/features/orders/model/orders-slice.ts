@@ -5,6 +5,7 @@ import { Order } from '@/features/orders/types';
 import { OrdersState } from './types';
 import { fetchOrders } from '../api/orders';
 import { RootState } from '@/redux';
+import { addOrder, AddOrderInput } from '../api/addOrder';
 
 const initialState: OrdersState = {
   orders: [],
@@ -25,6 +26,13 @@ export const loadOrders = createAsyncThunk(
     if (state.orders.orders.length > 0) return state.orders.orders;
 
     return fetchOrders();
+  },
+);
+
+export const createOrder = createAsyncThunk(
+  'orders/createOrder',
+  async (input: AddOrderInput) => {
+    return addOrder(input);
   },
 );
 
@@ -72,6 +80,18 @@ const ordersSlice = createSlice({
       .addCase(loadOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to load orders';
+      })
+      .addCase(createOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders.unshift(action.payload);
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to create order';
       });
   },
 });

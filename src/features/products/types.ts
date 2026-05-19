@@ -4,6 +4,7 @@ export interface Price {
 }
 
 export interface Product {
+  _id: string;
   id: number;
   serialNumber: string;
   photo: string;
