@@ -25,6 +25,7 @@ const ProductsTypeSelector = () => {
         className='form-select cursor__pointer'
         aria-label='Default select example'
         value={selectedType}
+        suppressHydrationWarning
         onChange={(e) => dispatch(setSelectedType(e.target.value))}
       >
         {productTypes.map((type) => (

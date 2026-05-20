@@ -9,11 +9,19 @@ import ProductsTypeSelector from './ProductsTypeSelector';
 import ProductCard from './ProductCard/ProductCard';
 import ProductSkeleton from './ProductSkeleton';
 import ErrorMessage from '@/components/ui/ErrorMessage';
-import AddProductModal from './AddProductModal/AddProductModal';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
+
+// lazy loading of AddProductModal
+const AddProductModal = dynamic(
+  () => import('./AddProductModal/AddProductModal'),
+  { ssr: false },
+);
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const tProductAddModal = useTranslations('ProductAddModal');
 
   const products = useSelector((state: RootState) => state.products.products);
   const selectedType = useSelector(
@@ -117,7 +125,7 @@ const Products = () => {
           onClick={() => setIsAddModalOpen(true)}
         >
           <AiOutlinePlus />
-          Добавить продукт
+          {tProductAddModal('title')}
         </button>
       </div>
 

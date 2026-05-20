@@ -17,8 +17,10 @@ import DeleteOrderModal from './DeleteOrderModal';
 import OrdersList from './OrdersList/OrdersList';
 import { calculateCurrencyTotal } from '../utils/calculateCurrencyTotal';
 import ErrorMessage from '@/components/ui/ErrorMessage';
-import AddOrderModal from './AddOrderModal';
 import { AiOutlinePlus } from 'react-icons/ai';
+import dynamic from 'next/dynamic';
+
+const AddOrderModal = dynamic(() => import('./AddOrderModal'), { ssr: false });
 
 const Orders = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -110,11 +112,11 @@ const Orders = () => {
 
   return (
     <div
-      className='container m-0 px-4 py-4 d-flex gap-3'
+      className='container m-0 px-4 py-4 d-flex gap-3 flex-column'
       style={{ height: 'calc(100vh - 100px)' }}
     >
       {/* Add Order */}
-      <div className='flex-shrink-0 d-flex justify-content-end'>
+      <div className='flex-shrink-0 d-flex justify-content-start'>
         <button
           className='btn btn-primary d-flex align-items-center justify-content-center green-color'
           style={{ width: 40, height: 40 }}
@@ -125,19 +127,24 @@ const Orders = () => {
       </div>
 
       {/* Orders List */}
-      <OrdersList
-        handleSelectOrder={handleSelectOrder}
-        setIsModalOpen={setIsModalOpen}
-      />
-
-      {/* Order Details */}
-      {selectedOrder && (
-        <OrderDetails
-          // products={products}
-          isDisappearing={isDisappearing}
-          handleCloseDetails={handleCloseDetails}
+      <div
+        className='d-flex gap-3 flex-grow-1'
+        style={{ minHeight: 0, overflow: 'hidden' }}
+      >
+        <OrdersList
+          handleSelectOrder={handleSelectOrder}
+          setIsModalOpen={setIsModalOpen}
         />
-      )}
+
+        {/* Order Details */}
+        {selectedOrder && (
+          <OrderDetails
+            // products={products}
+            isDisappearing={isDisappearing}
+            handleCloseDetails={handleCloseDetails}
+          />
+        )}
+      </div>
 
       {/* Deletion Modal */}
       <DeleteOrderModal
@@ -155,6 +162,7 @@ const Orders = () => {
         }}
       />
 
+      {/* Order Addition Modal */}
       <AddOrderModal
         isOpen={isAddOrderModalOpen}
         onClose={() => setIsAddOrderModalOpen(false)}

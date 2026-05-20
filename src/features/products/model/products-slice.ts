@@ -5,8 +5,15 @@ import { RootState } from '../../../redux/index';
 import { Products } from './types';
 import { addProduct, AddProductInput } from '../api/addProduct';
 
+const getInitialType = (): string => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('selectedProductType') || 'all';
+  }
+  return 'all';
+};
+
 const initialState: Products = {
-  selectedType: 'all',
+  selectedType: getInitialType(),
   imageExists: {},
   products: [],
   loading: false,
@@ -37,6 +44,9 @@ const productsSlice = createSlice({
   reducers: {
     setSelectedType(state, action) {
       state.selectedType = action.payload;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('selectedProductType', action.payload);
+      }
     },
     setImageExists(state, action) {
       state.imageExists = action.payload;

@@ -19,6 +19,7 @@ const ProductImage = ({ product }: ProductImageProps) => {
         height={150}
         className='img-fluid rounded-start'
         alt={product.title}
+        loading='eager'
       />
     </div>
   );
