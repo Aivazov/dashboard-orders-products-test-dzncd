@@ -14,9 +14,10 @@
     "logout": "Logout",
     "sessions": "Active sessions"
   },
-  "Sidebar": {
+  "NavigationMenu": {
     "menuItemOrders": "Orders",
     "menuItemProducts": "Products",
+    "menuItemOrdersChart": "Orders chart",
     "logout": "Logout"
   },
   "ProductsFilter": {
@@ -76,5 +77,10 @@
     "sum": "Sum",
     "order": "Order",
     "date": "Date"
+  },
+  "OrdersChart": {
+    "title": "Parish Analytics (Total Cost)",
+    "sum": "Sum",
+    "noData": "No data to display on the chart"
   }
 }

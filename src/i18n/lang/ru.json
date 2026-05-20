@@ -14,9 +14,10 @@
     "logout": "Выйти",
     "sessions": "Активных сессий"
   },
-  "Sidebar": {
+  "NavigationMenu": {
     "menuItemOrders": "Приход",
     "menuItemProducts": "Продукты",
+    "menuItemOrdersChart": "График приходов",
     "logout": "Выйти"
   },
   "ProductsFilter": {
@@ -76,5 +77,10 @@
     "sum": "Сумма",
     "order": "Заказ",
     "date": "Дата"
+  },
+  "OrdersChart": {
+    "title": "Аналитика приходов (Общая стоимость)",
+    "sum": "Сумма",
+    "noData": "Нет данных для отображения графика"
   }
 }

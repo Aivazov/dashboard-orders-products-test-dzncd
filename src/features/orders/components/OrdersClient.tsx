@@ -19,6 +19,7 @@ import { calculateCurrencyTotal } from '../utils/calculateCurrencyTotal';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { AiOutlinePlus } from 'react-icons/ai';
 import dynamic from 'next/dynamic';
+import OrdersChart from './OrdersChart';
 
 const AddOrderModal = dynamic(() => import('./AddOrderModal'), { ssr: false });
 

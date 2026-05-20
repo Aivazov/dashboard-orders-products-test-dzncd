@@ -7,7 +7,7 @@ import SidebarMenuItem from './SidebarMenuItem';
 import { useTranslations } from 'next-intl';
 
 const NavigationMenu = () => {
-  const t = useTranslations('Sidebar');
+  const tNavigationMenu = useTranslations('NavigationMenu');
   return (
     <nav
       className='shadow p-3 flex flex-col justify-between'
@@ -16,13 +16,18 @@ const NavigationMenu = () => {
     >
       <ul className='nav flex-column gap-3'>
         <SidebarMenuItem
-          name={t('menuItemOrders')}
+          name={tNavigationMenu('menuItemOrders')}
           path='/orders'
           Icon={FaListUl}
         />
         <SidebarMenuItem
-          name={t('menuItemProducts')}
+          name={tNavigationMenu('menuItemProducts')}
           path='/products'
+          Icon={HiOutlineShoppingBag}
+        />
+        <SidebarMenuItem
+          name={tNavigationMenu('menuItemOrdersChart')}
+          path='/orders-chart'
           Icon={HiOutlineShoppingBag}
         />
       </ul>
